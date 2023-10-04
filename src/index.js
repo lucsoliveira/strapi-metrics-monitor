@@ -1,15 +1,12 @@
 const axios = require("axios");
 const { Table } = require("console-table-printer");
 
+const projectName = process.argv[2];
+const urlMetrics = process.argv[3];
+
 const convertBytesToMB = (value) => {
   return (value / (1024 * 1024)).toFixed(2) + " MB";
 };
-
-const backofficeUrl =
-  "https://product-catalog-uri-admin-hml.lojasrenner.io/api/metrics";
-
-const wcmsURL =
-  "https://renner-saas-wcms-strapi-admin-hml.lojasrenner.io/api/metrics";
 
 function getMetrics(url) {
   const result = axios.get(url).then((res) => {
@@ -51,7 +48,6 @@ function getMetrics(url) {
 
     const p = new Table();
 
-    //add rows with color
     p.addRow({
       index: 1,
       text: "strapi_process_resident_memory_bytes",
@@ -76,6 +72,7 @@ function getMetrics(url) {
 
 setInterval(() => {
   console.clear();
-  console.log("Project: WCMS");
-  getMetrics(wcmsURL);
+  console.log(`Project: ${projectName}`);
+  console.log(`------ Memory ------`);
+  getMetrics(urlMetrics);
 }, 2000);
