@@ -95,6 +95,7 @@ function getMetrics(url: string) {
 setInterval(() => {
   console.clear();
   console.log(`Project: ${projectName}`);
+  console.log(`URL: ${urlMetrics}`);
   console.log(`------ Memory ------`);
   getMetrics(urlMetrics);
 }, secondsUpdate);
