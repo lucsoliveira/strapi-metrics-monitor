@@ -1,23 +1,25 @@
-const axios = require("axios");
-const { Table } = require("console-table-printer");
+import axios from "axios";
+import { Table } from "console-table-printer";
 
-const projectName = process.argv[2];
+//@ts-ignore
+const projectName = process.argv[2] || "N/A";
+//@ts-ignore
 const urlMetrics = process.argv[3];
 
-const convertBytesToMB = (value) => {
+const convertBytesToMB = (value: number) => {
   return (value / (1024 * 1024)).toFixed(2) + " MB";
 };
 
-function getMetrics(url) {
+function getMetrics(url: string) {
   const result = axios.get(url).then((res) => {
     const { data } = res;
     const lines = data.split("\n");
 
     const aux = [];
 
-    let strapi_process_resident_memory_bytes;
-    let strapi_process_virtual_memory_bytes;
-    let strapi_nodejs_external_memory_bytes;
+    let strapi_process_resident_memory_bytes = 0;
+    let strapi_process_virtual_memory_bytes = 0;
+    let strapi_nodejs_external_memory_bytes = 0;
     for (const item of lines) {
       const objAux = item.split(" ");
 
